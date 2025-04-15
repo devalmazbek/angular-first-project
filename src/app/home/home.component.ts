@@ -11,7 +11,7 @@ import { HousingService } from '../housing.service';
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Filter by city" />
+        <input type="text" placeholder="Filter by city" #filter>
         <button class="primary" type="button">Search</button>
       </form>
     </section>
@@ -27,10 +27,14 @@ import { HousingService } from '../housing.service';
 export class HomeComponent {
 
   housingLocationList: HousingLocation[] = [];
+  filteredLocationList: HousingLocation[] = [];
   housingService: HousingService = inject(HousingService);
 
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocation();
+    this.housingService.getAllHousingLocation().then((housingLocationList: HousingLocation[]) => {
+      this.housingLocationList = housingLocationList;
+    })
+    // this.filteredLocationList = this.housingLocationList;
   }
 
 }
